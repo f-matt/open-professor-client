@@ -1,0 +1,12 @@
+<h2>Adding new course:</h2>
+
+<form>
+    <mat-form-field class="w-100">
+        <mat-label>Name</mat-label>
+        <input matInput 
+            name="name"
+            [(ngModel)]="course.name">
+    </mat-form-field>
+    
+    <button mat-flat-button color="primary" (click)="save()">Save</button>
+</form>

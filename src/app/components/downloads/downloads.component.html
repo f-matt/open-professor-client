@@ -1,0 +1,85 @@
+<h2>File Downloads</h2>
+
+<form>
+    <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>Download Moodle and Latex</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div fxLayout="column" class="conteiner">
+            <div fxLayout="row" fxLayoutGap="10px">
+                <mat-form-field fxFlex="50">
+                    <mat-label>Course</mat-label>
+                    <mat-select name="course"  [(ngModel)]="selectedCourse">
+                        <mat-option *ngFor="let course of courses" [value]="course">
+                            {{course.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field fxFlex="50">
+                    <mat-label>Section</mat-label>
+                    <input matInput 
+                        name="section"
+                        [(ngModel)]="section">
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row">
+                <button mat-flat-button 
+                    fxFlex="10"
+                    color="primary" (click)="downloadAll()">Download All</button>
+            </div>
+        </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>Download Moodle</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div fxLayout="column" fxLayoutGap="10px">
+            <div fxLayout="row" fxFlex="100">
+                <mat-form-field>
+                    <mat-label>Question IDs (comma-separated list)</mat-label>
+                    <input matInput
+                        name="moodleIds"
+                        [(ngModel)]="moodleIds">
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxFlex="100">
+                <button mat-flat-button color="primary" (click)="downloadMoodle()">Download (Moodle XML)</button>
+            </div>
+        </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>Download Latex</mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div fxLayout="column" class="conteiner">
+            <div fxLayout="row" fxLayoutGap="10px">
+                <mat-form-field fxFlex="50">
+                    <mat-label>Course</mat-label>
+                    <mat-select name="courseLatex"  [(ngModel)]="selectedCourseLatex">
+                        <mat-option *ngFor="let course of courses" [value]="course">
+                            {{course.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field fxFlex="50">
+                    <mat-label>Section</mat-label>
+                    <input matInput 
+                        name="sectionLatex"
+                        type="number"
+                        [(ngModel)]="sectionLatex">
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxFlex="10">
+                <button mat-flat-button color="primary" (click)="downloadLatex()">Download</button>
+            </div>
+        </div>
+    </mat-expansion-panel>
+</form>

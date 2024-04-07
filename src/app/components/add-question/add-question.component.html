@@ -1,0 +1,51 @@
+<h2>Adding new question:</h2>
+
+<form>
+    <mat-form-field appearance="fill">
+        <mat-label>Course</mat-label>
+        <mat-select name="course"  [(ngModel)]="question.course">
+          <mat-option *ngFor="let course of courses" [value]="course">
+            {{course.name}}
+          </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="w-100">
+        <mat-label>Text</mat-label>
+        <textarea  matInput 
+            name="question"
+            rows="5"
+            [(ngModel)]="question.text"></textarea>
+    </mat-form-field>
+  
+    <mat-form-field class="w-100">
+        <mat-label>Correct answer</mat-label>
+        <input matInput 
+            name="correct"
+            [(ngModel)]="correctAnswer.text">
+    </mat-form-field>
+    
+    <mat-form-field class="w-100">
+        <mat-label>Wrong answer 1</mat-label>
+        <input matInput
+            name="wrong1"
+            [(ngModel)]="wrongAnswer1.text">
+    </mat-form-field>
+
+    <mat-form-field class="w-100">
+        <mat-label>Wrong answer 2</mat-label>
+        <input matInput
+            name="wrong2"
+            [(ngModel)]="wrongAnswer2.text">
+    </mat-form-field>
+
+    <mat-form-field class="w-100">
+        <mat-label>Wrong answer 3</mat-label>
+        <input matInput
+            name="wrong3"
+            [(ngModel)]="wrongAnswer3.text">
+    </mat-form-field>
+
+    <button mat-flat-button color="primary" (click)="save()">Save</button>
+</form>
+  

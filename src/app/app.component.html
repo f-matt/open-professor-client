@@ -1,0 +1,45 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <span>Open Professor</span>
+  <span class="simple-spacer"></span>
+
+  <button mat-icon-button aria-label="Like">
+    <mat-icon>favorite</mat-icon>
+  </button>
+  <button mat-icon-button aria-label="Share">
+    <mat-icon>share</mat-icon>
+  </button>
+  <button mat-icon-button aria-label="Logout" (click)="logout()">
+    <mat-icon>logout</mat-icon>
+  </button>
+
+</mat-toolbar>
+
+<mat-sidenav-container style="height:100%">
+  <mat-sidenav #sidenav mode="side">
+        <button *ngIf="hasPermission('ADMIN')" mat-menu-item [matMenuTriggerFor]="menuCourses">Courses</button>
+        <button *ngIf="hasPermission('ADMIN')" mat-menu-item [matMenuTriggerFor]="menuQuestions">Questions</button>
+        <button *ngIf="hasPermission('ADMIN')" mat-menu-item [matMenuTriggerFor]="menuDownloads">Downloads</button>
+    
+    <mat-menu #menuCourses="matMenu">
+      <button mat-menu-item routerLink="/courses/add">New</button>
+      <button mat-menu-item routerLink="/courses">List</button>
+    </mat-menu>
+    
+    <mat-menu #menuQuestions="matMenu">
+      <button mat-menu-item routerLink="/questions/add">New</button>
+      <button mat-menu-item routerLink="/questions">List</button>
+    </mat-menu>
+    
+    <mat-menu #menuDownloads="matMenu">
+      <button mat-menu-item routerLink="/downloads">Downloads</button>
+    </mat-menu>
+
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
