@@ -4,8 +4,9 @@ import { BehaviorSubject, Observable, map } from 'rxjs';
 import { JwtToken } from '../models/jwt-token';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { environment } from '@environments/environment';
   
-const baseUrl = "/api";
+const BASE_URL = environment.apiUrl;
 
 const TOKEN_NAME = "openProfessorToken";
 
@@ -40,7 +41,7 @@ export class AuthService {
   }
 
   login(username: string, password: string) {
-    return this.httpClient.post<JwtToken>(`${baseUrl}/login`, 
+    return this.httpClient.post<JwtToken>(`${BASE_URL}/auth/login`, 
       {'username':username, 'password':password})
       .pipe(map(token => {
         localStorage.setItem(TOKEN_NAME, JSON.stringify(token));
@@ -51,7 +52,7 @@ export class AuthService {
 
   refreshToken() {
     console.log("refresh");
-    return this.httpClient.post<JwtToken>(`${baseUrl}/refresh`, 
+    return this.httpClient.post<JwtToken>(`${BASE_URL}/refresh`, 
       {})
       .pipe(map(token => {
         const existingTokenJson = localStorage.getItem(TOKEN_NAME);
