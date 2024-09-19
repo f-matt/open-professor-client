@@ -7,8 +7,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from '@environments/environment';
   
 const BASE_URL = environment.apiUrl;
-
-const TOKEN_NAME = "openProfessorToken";
+const TOKEN_NAME = environment.tokenName;
 
 @Injectable({
   providedIn: "root"
@@ -44,8 +43,10 @@ export class AuthService {
     return this.httpClient.post<JwtToken>(`${BASE_URL}/auth/login`, 
       {'username':username, 'password':password})
       .pipe(map(token => {
+        console.log("login: ", token);
         localStorage.setItem(TOKEN_NAME, JSON.stringify(token));
         this.tokenSubject.next(token);
+        console.log("token subject: ", this.tokenSubject);
         return token;
       }));
   }

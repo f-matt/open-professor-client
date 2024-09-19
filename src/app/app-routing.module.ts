@@ -7,16 +7,16 @@ import { AddCourseComponent } from './components/add-course/add-course.component
 import { CourseListComponent } from './components/course-list/course-list.component';
 import { DownloadsComponent } from './components/downloads/downloads.component';
 import { LoginComponent } from './components/login/login.component';
-import { AuthGuard } from './helpers/auth.guard';
+import { authGuard } from './helpers/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'courses', pathMatch: 'full' },
-  { path: 'questions', component: QuestionListComponent, canActivate: [AuthGuard] },
-  { path: 'questions/detail/:id', component: QuestionDetailsComponent, canActivate: [AuthGuard]},
-  { path: 'questions/add', component: AddQuestionComponent, canActivate: [AuthGuard]},
-  { path: 'courses/add', component: AddCourseComponent, canActivate: [AuthGuard]},
-  { path: 'courses', component: CourseListComponent, canActivate: [AuthGuard]},
-  { path: 'downloads', component: DownloadsComponent, canActivate: [AuthGuard]},
+  { path: 'questions', component: QuestionListComponent, canActivate: [authGuard] },
+  { path: 'questions/detail/:id', component: QuestionDetailsComponent, canActivate: [authGuard]},
+  { path: 'questions/add', component: AddQuestionComponent, canActivate: [authGuard]},
+  { path: 'courses/add', component: AddCourseComponent, canActivate: [authGuard]},
+  { path: 'courses', component: CourseListComponent, canActivate: [authGuard]},
+  { path: 'downloads', component: DownloadsComponent, canActivate: [authGuard]},
   { path: 'login', component: LoginComponent },
 ];
 

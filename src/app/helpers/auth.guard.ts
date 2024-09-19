@@ -1,25 +1,17 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { inject, Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { environment } from '@environments/environment';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class AuthGuard  {
+const TOKEN_NAME = environment.tokenName;
 
-  constructor(private router: Router,
-    private authService: AuthService) { }
-  
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      const token = this.authService.tokenValue;
-      if (token)
-        return true;
+export const authGuard: CanActivateFn = (route, state) => {
+  if (localStorage.getItem(TOKEN_NAME))
+    return true;
 
-      this.router.navigate(['/login'], {queryParams: { returnUrl: state.url }});
-      return false;
-  }
-  
-}
+  const router: Router = inject(Router);
+  router.navigate(["/login"], { queryParams : { returnUrl: state.url }});
+
+  return false;
+};
