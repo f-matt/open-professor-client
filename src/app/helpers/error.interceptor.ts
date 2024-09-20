@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
-import { BehaviorSubject, Observable, catchError, switchMap, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { BehaviorSubject, catchError, Observable, switchMap, throwError } from 'rxjs';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -14,8 +14,8 @@ export class ErrorInterceptor implements HttpInterceptor {
   ) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    console.log("intercept");
     return next.handle(request).pipe(catchError(err => {
+      console.log ("DBG: ", err);
       if (err.status == 403) {
         this.authService.logout();
         return throwError(() => new Error('Access denied.'));
@@ -27,7 +27,6 @@ export class ErrorInterceptor implements HttpInterceptor {
         }
       }
       
-      console.log(err);
       const error = err.error.message || err.statusText;
       return throwError(() => new Error(error));
     }));

@@ -1,12 +1,20 @@
 import { Component } from '@angular/core';
 import { AuthService } from './services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatSidenavContainer, MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
+import { NgIf } from '@angular/common';
+import { MatMenuItem, MatMenuTrigger, MatMenu } from '@angular/material/menu';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css'],
+    standalone: true,
+    imports: [MatToolbar, MatIconButton, MatIcon, MatSidenavContainer, MatSidenav, NgIf, MatMenuItem, MatMenuTrigger, MatMenu, RouterLink, MatSidenavContent, RouterOutlet]
 })
 export class AppComponent {
   title = 'openProfessorClient';

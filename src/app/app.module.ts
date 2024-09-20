@@ -48,40 +48,4 @@ export function tokenGetter(request: HttpRequest<any> | undefined) {
   return token.access_token;
 }
 
-@NgModule({ declarations: [
-        AppComponent,
-        AddQuestionComponent,
-        QuestionDetailsComponent,
-        QuestionListComponent,
-        AddCourseComponent,
-        CourseListComponent,
-        DownloadsComponent,
-        LoginComponent,
-    ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
-        AppRoutingModule,
-        FormsModule,
-        FlexLayoutModule,
-        JwtModule.forRoot({
-            config: {
-                tokenGetter: (request: HttpRequest<any> | undefined) => tokenGetter(request),
-                allowedDomains: ['localhost:5000'],
-                disallowedRoutes: []
-            },
-        }),
-        BrowserAnimationsModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatButtonModule,
-        MatInputModule,
-        MatSnackBarModule,
-        MatSelectModule,
-        MatMenuModule,
-        MatSidenavModule,
-        MatListModule,
-        MatTableModule,
-        MatExpansionModule], providers: [
-        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-        provideHttpClient(withInterceptorsFromDi()),
-    ] })
-export class AppModule { }
+

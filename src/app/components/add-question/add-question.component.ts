@@ -5,11 +5,20 @@ import { Course } from 'src/app/models/course';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { QuestionsService } from 'src/app/services/questions.service';
 import { CoursesService } from 'src/app/services/courses.service';
+import { FormsModule } from '@angular/forms';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor } from '@angular/common';
+import { MatOption } from '@angular/material/core';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
 
 @Component({
-  selector: 'app-add-question',
-  templateUrl: './add-question.component.html',
-  styleUrls: ['./add-question.component.css']
+    selector: 'app-add-question',
+    templateUrl: './add-question.component.html',
+    styleUrls: ['./add-question.component.css'],
+    standalone: true,
+    imports: [FormsModule, MatFormField, MatLabel, MatSelect, NgFor, MatOption, MatInput, MatButton]
 })
 export class AddQuestionComponent implements OnInit {
 

@@ -4,11 +4,22 @@ import { saveAs } from 'file-saver';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CoursesService } from 'src/app/services/courses.service';
 import { Course } from 'src/app/models/course';
+import { FormsModule } from '@angular/forms';
+import { MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from '@angular/material/expansion';
+import { FlexModule } from '@angular/flex-layout/flex';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor } from '@angular/common';
+import { MatOption } from '@angular/material/core';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
 
 @Component({
-  selector: 'app-downloads',
-  templateUrl: './downloads.component.html',
-  styleUrls: ['./downloads.component.css']
+    selector: 'app-downloads',
+    templateUrl: './downloads.component.html',
+    styleUrls: ['./downloads.component.css'],
+    standalone: true,
+    imports: [FormsModule, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, FlexModule, MatFormField, MatLabel, MatSelect, NgFor, MatOption, MatInput, MatButton]
 })
 export class DownloadsComponent {
 

@@ -2,11 +2,17 @@ import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Course } from 'src/app/models/course';
 import { CoursesService } from 'src/app/services/courses.service';
+import { FormsModule } from '@angular/forms';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
 
 @Component({
-  selector: 'app-add-course',
-  templateUrl: './add-course.component.html',
-  styleUrls: ['./add-course.component.css']
+    selector: 'app-add-course',
+    templateUrl: './add-course.component.html',
+    styleUrls: ['./add-course.component.css'],
+    standalone: true,
+    imports: [FormsModule, MatFormField, MatLabel, MatInput, MatButton]
 })
 export class AddCourseComponent {
 
