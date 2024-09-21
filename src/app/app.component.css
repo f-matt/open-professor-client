@@ -1,8 +1,40 @@
-mat-sidenav-container {
-    width: 100%;
-    min-width: 100%;
- }
+.main-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
 
- mat-sidenav-content {
-    padding: 10px;
- }
+.toolbar {
+  background: #23025f;
+  color: white;
+  position: fixed;
+  z-index: 2;
+}
+ 
+.sidenav-container {
+  flex: 1 0 auto;
+  margin-top: 80px;
+}
+
+.sidenav-content {
+  margin: 10px;
+}
+
+.sidenav-list {
+  margin-top:10px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.sidenav-button {
+  justify-content: flex-start;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+ 

@@ -1,25 +1,32 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { AuthService } from './services/auth.service';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatToolbar } from '@angular/material/toolbar';
-import { MatIconButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
-import { MatSidenavContainer, MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
-import { NgIf } from '@angular/common';
-import { MatMenuItem, MatMenuTrigger, MatMenu } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
     standalone: true,
-    imports: [MatToolbar, MatIconButton, MatIcon, MatSidenavContainer, MatSidenav, NgIf, MatMenuItem, MatMenuTrigger, MatMenu, RouterLink, MatSidenavContent, RouterOutlet]
+    imports: [MatMenuModule, 
+      MatIconModule, 
+      MatToolbarModule,
+      MatSidenavModule, 
+      MatButtonModule,
+      RouterModule, 
+      RouterModule,
+      CommonModule]
 })
 export class AppComponent {
   title = 'openProfessorClient';
 
-  constructor(private authService: AuthService,
+  constructor(protected authService: AuthService,
     private router: Router,
     private snackBar: MatSnackBar) { }
 
@@ -35,7 +42,7 @@ export class AppComponent {
       if (e instanceof Error)
         this.snackBar.open(e.message, "", {"duration":3000});
       else
-        this.snackBar.open("Ocorreu um erro ao veriifcar as permissões.", "", {"duration":3000});
+        this.snackBar.open("Error checking permission.", "", { duration : 3000});
     }
 
     return false;
