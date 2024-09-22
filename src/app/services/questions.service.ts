@@ -57,7 +57,11 @@ export class QuestionsService {
   downloadAll(course: Course, section: number): any {
 		return this.httpClient.get(`${BASE_URL}/download-all?course_id=${course.id}&section=${section}`, {responseType: 'blob'});
   }
-   
+
+  findByCourseAndSection(course : Course, section : number) : Observable<Question[]> {
+    return this.httpClient.get<Question[]>(`${BASE_URL}/questions?course=${course.id}&section=${section}`);
+  }
+  
   getAll() : Observable<Question[]> {
     return this.httpClient.get<any>(BASE_URL + 'questions').pipe(map(data => data.questions));
   }

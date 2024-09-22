@@ -1,41 +1,92 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionsService } from 'src/app/services/questions.service';
-import { saveAs } from 'file-saver';
 import { Question } from 'src/app/models/question.model';
 import { FormsModule } from '@angular/forms';
-import { MatButton, MatIconButton } from '@angular/material/button';
-import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
-import { RouterLink } from '@angular/router';
-import { MatIcon } from '@angular/material/icon';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { RouterModule } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { Course } from 'src/app/models/course';
+import { CustomRuntimeError } from 'src/app/errors/custom-runtime-error';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatInputModule } from '@angular/material/input';
+import { CoursesService } from 'src/app/services/courses.service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'app-question-list',
     templateUrl: './question-list.component.html',
     styleUrls: ['./question-list.component.css'],
     standalone: true,
-    imports: [FormsModule, MatButton, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, RouterLink, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow]
+    imports: [
+      FormsModule, 
+      RouterModule,
+      MatFormFieldModule,
+      MatSelectModule,
+      MatTableModule,
+      MatIconModule,
+      MatInputModule,
+      MatButtonModule
+    ]
 })
 export class QuestionListComponent implements OnInit {
 
-  questions : Question[] = [];
-  displayedColumns: string[] = ['id', 'text', 'actions'];
+  protected courses : Course[] = [];
 
-  constructor(private questionsService : QuestionsService) {}
+  protected course : Course | null = null;
+
+  protected section : number | null = null;
+
+  protected questions : Question[] = [];
+
+  protected displayedColumns: string[] = ['id', 'text', 'actions'];
+
+  protected dataSource: MatTableDataSource<Question> = new MatTableDataSource<Question>(this.questions);
+
+  protected pageIndex: number = 0;
+  
+  protected pageSize: number = 0;
+
+  protected length: number = 0;        
+
+  constructor(private snackBar : MatSnackBar,
+    private questionsService : QuestionsService,
+    private coursesService: CoursesService) { }
 
   ngOnInit() {
-    this.questionsService.getAll().subscribe(questions => {
-	 	this.questions = questions;
-	});
+    this.coursesService.getAll().subscribe({
+      next: (courses => {
+        this.courses = courses;
+      }),
+      error: (e => {
+        if (e instanceof CustomRuntimeError) 
+          this.snackBar.open(e.message, "", { duration : 3000 });
+        else
+          this.snackBar.open("Error retrieving courses.", "", { duration : 3000 });
+      })
+    });
   }
 
-  download() {
-		this.questionsService.downloadMoodle('').subscribe((response: any) => {
-			let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
-			const url = window.URL.createObjectURL(blob);
-			//window.open(url);
-			saveAs(blob, 'file.xml');
-			}), (error: any) => console.log('Error downloading the file'),
-			() => console.info('File downloaded successfully');
+  search() {
+    if (!this.course) {
+      this.snackBar.open("Course is mandatory.", "", { duration : 3000 });
+      return;
+    }
+
+    if (!this.section) {
+      this.snackBar.open("Section is mandatory.", "", { duration : 3000 });
+      return;
+    }
+
+		this.questionsService.findByCourseAndSection(this.course, this.section).subscribe((questions: Question[]) => { 
+      this.questions = questions;
+    }), (error: any) => {
+      if (error instanceof CustomRuntimeError)
+        this.snackBar.open(error.message, "", { duration : 3000 });
+      else
+        this.snackBar.open("Error retrieving questions.", "", { duration : 3000 });
+    }
 	}
 
 }
