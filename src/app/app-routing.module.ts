@@ -8,12 +8,14 @@ import { CourseListComponent } from './components/course-list/course-list.compon
 import { DownloadsComponent } from './components/downloads/downloads.component';
 import { LoginComponent } from './components/login/login.component';
 import { authGuard } from './helpers/auth.guard';
+import { QuestionExportComponent } from './components/question-export/question-export.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'courses', pathMatch: 'full' },
   { path: 'questions', component: QuestionListComponent, canActivate: [authGuard] },
   { path: 'questions/detail/:id', component: QuestionDetailsComponent, canActivate: [authGuard]},
   { path: 'questions/add', component: AddQuestionComponent, canActivate: [authGuard]},
+  { path: 'questions/export', component: QuestionExportComponent, canActivate: [authGuard]},
   { path: 'courses/add', component: AddCourseComponent, canActivate: [authGuard]},
   { path: 'courses', component: CourseListComponent, canActivate: [authGuard]},
   { path: 'downloads', component: DownloadsComponent, canActivate: [authGuard]},

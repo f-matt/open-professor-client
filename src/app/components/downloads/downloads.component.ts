@@ -65,7 +65,7 @@ export class DownloadsComponent {
 	}
 
 	downloadMoodle() {
-		this.questionsService.downloadMoodle(this.moodleIds).subscribe((response: any) => {
+		this.questionsService.exportMoodle([]).subscribe((response: any) => {
 			let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
 			const url = window.URL.createObjectURL(blob);
 			saveAs(blob, 'file.xml');

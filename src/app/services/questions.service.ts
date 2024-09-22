@@ -35,8 +35,17 @@ export class QuestionsService {
     return this.httpClient.post<any>(`${BASE_URL}/questions`, question, httpOptions);
   }
 
-  downloadMoodle(ids:string): any {
-		return this.httpClient.get(`${BASE_URL}/download-moodle/"${ids}"`, {responseType: 'blob'});
+  exportMoodle(ids : number[]): any {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Response-Type': 'blob'
+      })
+    };
+
+    let data = { "ids" : ids };
+
+		return this.httpClient.post(`${BASE_URL}/export-moodle`, data, httpOptions);
   }
 
   downloadLatex(course: Course, section?: number): any {
