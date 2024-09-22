@@ -1,11 +1,12 @@
-<h2>Login</h2>
+<div class="mat-title-large page-title">Login</div>
 
 <form>
+  <div style="display: flex; flex-direction: column; gap: 10px">
     <mat-form-field class="w-100">
-        <mat-label>Username:</mat-label>
-        <input matInput 
-            name="username"
-            [(ngModel)]="username">
+      <mat-label>Username:</mat-label>
+      <input matInput 
+          name="username"
+          [(ngModel)]="username">
     </mat-form-field>
 
      <mat-form-field class="w-100">
@@ -16,5 +17,9 @@
             [(ngModel)]="password">
     </mat-form-field>
     
-    <button mat-flat-button color="primary" (click)="login()">Login</button>
+    <button mat-flat-button 
+      color="primary" 
+      style="width: 10em"
+      (click)="login()">Login</button>
+  </div>
 </form>

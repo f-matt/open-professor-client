@@ -4,8 +4,9 @@ import { Observable, catchError, map, throwError } from 'rxjs';
 import { Question } from '../models/question.model';
 import { Answer } from '../models/answer.model';
 import { Course } from '../models/course';
+import { environment } from '@environments/environment';
 
-const baseUrl = '/api';
+const BASE_URL = environment.apiUrl;
 
 @Injectable({
   providedIn: 'root'
@@ -17,24 +18,25 @@ export class QuestionsService {
   save(question : Question, correctAnswer : Answer, wrongAnswer1 : Answer,
     wrongAnswer2 : Answer, wrongAnswer3 : Answer) : Observable<any> {
 
-    let data = {'question' : question.text, 
-      'correct' : correctAnswer.text,
-      'wrong1' : wrongAnswer1.text, 
-      'wrong2' : wrongAnswer2.text, 
-      'wrong3' : wrongAnswer3.text,
-      'course_id' : question.course?.id};
+    let answers = new Array();
+    answers.push(correctAnswer);
+    answers.push(wrongAnswer1);
+    answers.push(wrongAnswer2);
+    answers.push(wrongAnswer3);
 
+    question.answers = answers;
+    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
       })
     };
 
-    return this.httpClient.post<any>(`${baseUrl}/questions`, data, httpOptions);
+    return this.httpClient.post<any>(`${BASE_URL}/questions`, question, httpOptions);
   }
 
   downloadMoodle(ids:string): any {
-		return this.httpClient.get(`${baseUrl}/download-moodle/"${ids}"`, {responseType: 'blob'});
+		return this.httpClient.get(`${BASE_URL}/download-moodle/"${ids}"`, {responseType: 'blob'});
   }
 
   downloadLatex(course: Course, section?: number): any {
@@ -48,32 +50,32 @@ export class QuestionsService {
     if (section)
       httpParams = httpParams.set("section", section);
 
-		return this.httpClient.get(`${baseUrl}/download-latex`, 
+		return this.httpClient.get(`${BASE_URL}/download-latex`, 
       {params: httpParams, responseType: 'blob'});
   }
 
   downloadAll(course: Course, section: number): any {
-		return this.httpClient.get(`${baseUrl}/download-all?course_id=${course.id}&section=${section}`, {responseType: 'blob'});
+		return this.httpClient.get(`${BASE_URL}/download-all?course_id=${course.id}&section=${section}`, {responseType: 'blob'});
   }
    
   getAll() : Observable<Question[]> {
-    return this.httpClient.get<any>(baseUrl + 'questions').pipe(map(data => data.questions));
+    return this.httpClient.get<any>(BASE_URL + 'questions').pipe(map(data => data.questions));
   }
 
   get(id : any) : Observable<Question> {
-    return this.httpClient.get(`${baseUrl}/${id}`);
+    return this.httpClient.get(`${BASE_URL}/${id}`);
   }
 
   update(id : any, data : any) : Observable<any> {
-    return this.httpClient.put(`${baseUrl}/${id}`, data);
+    return this.httpClient.put(`${BASE_URL}/${id}`, data);
   }
 
   delete(id : any) : Observable<any> {
-    return this.httpClient.delete(`${baseUrl}/${id}`);
+    return this.httpClient.delete(`${BASE_URL}/${id}`);
   }
 
   getIds(course : Course) : Observable<Number[]> {
-    return this.httpClient.get<Number[]>(`${baseUrl}/questions/course/${course.id}`);
+    return this.httpClient.get<Number[]>(`${BASE_URL}/questions/course/${course.id}`);
   }
 
 }

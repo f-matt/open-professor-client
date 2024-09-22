@@ -29,7 +29,7 @@ export class AddCourseComponent {
 
     this.coursesService
       .save(this.course)
-      .subscribe(() => this.snackBar.open("Course successfully saved!"));
+      .subscribe(() => this.snackBar.open("Course successfully saved!", "", { duration : 3000 }));
   }
 
 }

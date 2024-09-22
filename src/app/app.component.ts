@@ -8,20 +8,23 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css'],
-    standalone: true,
-    imports: [MatMenuModule, 
-      MatIconModule, 
-      MatToolbarModule,
-      MatSidenavModule, 
-      MatButtonModule,
-      RouterModule, 
-      RouterModule,
-      CommonModule]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule,
+    MatMenuModule, 
+    MatIconModule, 
+    MatToolbarModule,
+    MatSidenavModule, 
+    MatButtonModule,
+    MatTooltipModule,
+  ]
 })
 export class AppComponent {
   title = 'openProfessorClient';

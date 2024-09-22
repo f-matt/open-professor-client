@@ -35,6 +35,7 @@ export class AddQuestionComponent implements OnInit {
 
   ngOnInit() {
     this.coursesService.getAll().subscribe(courses => this.courses = courses);
+    this.question.section = 1;
   }
 
   save() : void {
