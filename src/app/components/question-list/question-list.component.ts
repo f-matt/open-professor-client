@@ -3,7 +3,7 @@ import { QuestionsService } from 'src/app/services/questions.service';
 import { Question } from 'src/app/models/question.model';
 import { FormsModule } from '@angular/forms';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -51,6 +51,7 @@ export class QuestionListComponent implements OnInit {
   protected length: number = 0;        
 
   constructor(private snackBar : MatSnackBar,
+    private router : Router,
     private questionsService : QuestionsService,
     private coursesService: CoursesService) { }
 
@@ -88,5 +89,10 @@ export class QuestionListComponent implements OnInit {
         this.snackBar.open("Error retrieving questions.", "", { duration : 3000 });
     }
 	}
+
+  selectQuestion(question : Question) {
+    this.questionsService.selectedQuestion.set(question);
+    this.router.navigateByUrl("/questions/add");
+  }
 
 }

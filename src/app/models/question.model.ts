@@ -7,6 +7,6 @@ export class Question {
     text?: any;
     section?: number;
     course? : Course;
-    answers? : Answer[];
+    answers : Answer[] = [];
 
 }

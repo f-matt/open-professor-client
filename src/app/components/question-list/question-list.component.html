@@ -41,7 +41,7 @@
       <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef> Actions </th>
           <td mat-cell *matCellDef="let question">
-          <button mat-icon-button routerLink="/questions/edit/{{question.id}}">
+          <button mat-icon-button (click)="selectQuestion(question)">
               <mat-icon>edit</mat-icon>
           </button>
           </td>

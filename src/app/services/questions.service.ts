@@ -1,8 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { Question } from '../models/question.model';
-import { Answer } from '../models/answer.model';
 import { Course } from '../models/course';
 import { environment } from '@environments/environment';
 
@@ -13,19 +12,11 @@ const BASE_URL = environment.apiUrl;
 })
 export class QuestionsService {
 
+  public selectedQuestion = signal<Question>(new Question());
+
   constructor(private httpClient : HttpClient) { }
 
-  save(question : Question, correctAnswer : Answer, wrongAnswer1 : Answer,
-    wrongAnswer2 : Answer, wrongAnswer3 : Answer) : Observable<any> {
-
-    let answers = new Array();
-    answers.push(correctAnswer);
-    answers.push(wrongAnswer1);
-    answers.push(wrongAnswer2);
-    answers.push(wrongAnswer3);
-
-    question.answers = answers;
-    
+  save(question : Question) : Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
@@ -43,9 +34,9 @@ export class QuestionsService {
       })
     };
 
-    let data = { "ids" : ids };
+    let data = { "questionIds" : ids };
 
-		return this.httpClient.post(`${BASE_URL}/export-moodle`, data, httpOptions);
+		return this.httpClient.post(`${BASE_URL}/questions/export-moodle`, data, httpOptions);
   }
 
   downloadLatex(course: Course, section?: number): any {
@@ -76,7 +67,7 @@ export class QuestionsService {
   }
 
   get(id : any) : Observable<Question> {
-    return this.httpClient.get(`${BASE_URL}/${id}`);
+    return this.httpClient.get<Question>(`${BASE_URL}/${id}`);
   }
 
   update(id : any, data : any) : Observable<any> {

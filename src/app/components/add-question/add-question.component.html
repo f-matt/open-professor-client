@@ -4,10 +4,14 @@
   <div style="display: flex; flex-direction: column; gap: 10px">
     <mat-form-field appearance="fill">
         <mat-label>Course</mat-label>
-        <mat-select name="course"  [(ngModel)]="question.course">
-        <mat-option *ngFor="let course of courses" [value]="course">
-            {{course.name}}
-        </mat-option>
+        <mat-select name="course" 
+            [compareWith]="compareCourses"
+            [(ngModel)]="question.course">
+            @for (course of courses; track course.id) {
+                <mat-option [value]="course">
+                    {{course.name}}
+                </mat-option>
+            }
         </mat-select>
     </mat-form-field>
 
@@ -30,28 +34,28 @@
         <mat-label>Correct answer</mat-label>
         <input matInput 
             name="correct"
-            [(ngModel)]="correctAnswer.text">
+            [(ngModel)]="question.answers[0].text">
     </mat-form-field>
     
     <mat-form-field class="w-100">
         <mat-label>Wrong answer 1</mat-label>
         <input matInput
             name="wrong1"
-            [(ngModel)]="wrongAnswer1.text">
+            [(ngModel)]="question.answers[1].text">
     </mat-form-field>
 
     <mat-form-field class="w-100">
         <mat-label>Wrong answer 2</mat-label>
         <input matInput
             name="wrong2"
-            [(ngModel)]="wrongAnswer2.text">
+            [(ngModel)]="question.answers[2].text">
     </mat-form-field>
 
     <mat-form-field class="w-100">
         <mat-label>Wrong answer 3</mat-label>
         <input matInput
             name="wrong3"
-            [(ngModel)]="wrongAnswer3.text">
+            [(ngModel)]="question.answers[3].text">
     </mat-form-field>
 
     <button mat-flat-button 
