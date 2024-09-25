@@ -26,6 +26,19 @@ export class QuestionsService {
     return this.httpClient.post<any>(`${BASE_URL}/questions`, question, httpOptions);
   }
 
+  exportLatex(ids : number[]): any {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Response-Type': 'blob'
+      })
+    };
+
+    let data = { "questionIds" : ids };
+
+		return this.httpClient.post(`${BASE_URL}/questions/export-latex`, data, httpOptions);
+  }
+
   exportMoodle(ids : number[]): any {
     const httpOptions = {
       headers: new HttpHeaders({

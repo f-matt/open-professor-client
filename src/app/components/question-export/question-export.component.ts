@@ -94,13 +94,22 @@ export class QuestionExportComponent {
 	}
 
   exportMoodle() {
-    console.log("IDS:");
     console.log(this.selectedQuestions);
 		this.questionsService.exportMoodle(this.selectedQuestions).subscribe((response: any) => {
 			let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
 			const url = window.URL.createObjectURL(blob);
 			//window.open(url);
 			saveAs(blob, 'file.xml');
+			}), (error: any) => console.log("Error exporting questions."),
+			() => console.info("Questions succesfully exported.");
+	}
+
+  exportLatex() {
+    console.log(this.selectedQuestions);
+		this.questionsService.exportLatex(this.selectedQuestions).subscribe((response: any) => {
+			let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
+			const url = window.URL.createObjectURL(blob);
+			saveAs(blob, 'file.tex');
 			}), (error: any) => console.log("Error exporting questions."),
 			() => console.info("Questions succesfully exported.");
 	}
