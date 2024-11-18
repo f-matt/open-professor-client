@@ -52,6 +52,19 @@ export class QuestionsService {
 		return this.httpClient.post(`${BASE_URL}/questions/export-moodle`, data, httpOptions);
   }
 
+  exportLatexAndMoodle(course: Course, section: number): any {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Response-Type': 'blob'
+      })
+    };
+
+    let data = { "course" : course, "section" : section };
+
+		return this.httpClient.post(`${BASE_URL}/questions/export-moodle-and-latex`, data, httpOptions);
+  }
+ 
   downloadLatex(course: Course, section?: number): any {
     if (!course)
       throwError(() => new Error("Course is mandatory."));

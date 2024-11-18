@@ -15,7 +15,6 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(catchError(err => {
-      console.log ("DBG: ", err);
       if (err.status == 403) {
         this.authService.logout();
         return throwError(() => new Error('Access denied.'));
@@ -25,6 +24,8 @@ export class ErrorInterceptor implements HttpInterceptor {
         } else {
           return this.handle401Error(request, next);
         }
+      } else if (err.status == 400 && !err.error.message) {
+        return throwError(() => new Error('An error ocurred while processing your request.'));
       }
       
       const error = err.error.message || err.statusText;

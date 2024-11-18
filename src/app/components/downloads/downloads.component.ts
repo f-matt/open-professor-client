@@ -88,19 +88,23 @@ export class DownloadsComponent {
 	}
 
 	downloadAll() {
+		console.log("Download all.");
 		if (!this.selectedCourse || !this.section) {
 			this.snackBar.open("Course and section are mandatory.");
 			return;
 		}
 
-		this.questionsService.downloadAll(this.selectedCourse, this.section).subscribe((response: any) => {
+		this.questionsService.exportLatexAndMoodle(this.selectedCourse, this.section).subscribe((response: any) => {
+			console.log("ok");
 			let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
 			const url = window.URL.createObjectURL(blob);
 			saveAs(blob, 'download.zip');
-		}), (error: any) => this.snackBar.open("Error downloading file.", '', { duration: 3000}),
-			() => this.snackBar.open("File successfully downloaded!", '', { duration:3000});
+		}), 
+		(error: any) => {
+			console.log("Error");
+			this.snackBar.open("Error downloading file.", '', { duration: 3000});
+		},
+		() => this.snackBar.open("File successfully downloaded!", '', { duration:3000});
 	}
-
-
 
 }
