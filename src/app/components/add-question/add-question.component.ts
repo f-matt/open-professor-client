@@ -107,7 +107,11 @@ export class AddQuestionComponent implements OnInit {
 
     this.questionsService.save(this.question).subscribe(() => {
         this.snackBar.open("Question successfully saved!", "", { duration: 3000 });
+        let selectedCourse = this.question.course;
+        let selectedSection = this.question.section;
         this.question = new Question();
+        this.question.course = selectedCourse;
+        this.question.section = selectedSection;
         let answers : Answer[] = [];
         for (let i = 0; i < 4; ++i) {
           let answer : Answer = new Answer();
