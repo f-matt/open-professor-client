@@ -15,6 +15,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(catchError(err => {
+      console.log(err);
       if (err.status == 403) {
         this.authService.logout();
         return throwError(() => new Error('Access denied.'));
@@ -29,6 +30,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       }
       
       const error = err.error.message || err.statusText;
+      console.log(err);
       return throwError(() => new Error(error));
     }));
   }

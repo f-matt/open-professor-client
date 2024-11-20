@@ -88,15 +88,13 @@ export class DownloadsComponent {
 	}
 
 	downloadAll() {
-		console.log("Download all.");
 		if (!this.selectedCourse || !this.section) {
 			this.snackBar.open("Course and section are mandatory.");
 			return;
 		}
 
-		this.questionsService.exportLatexAndMoodle(this.selectedCourse, this.section).subscribe((response: any) => {
-			console.log("ok");
-			let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
+		this.questionsService.exportLatexAndMoodle(this.selectedCourse, this.section).subscribe((response: BlobPart) => {
+			const blob = new Blob([response], { type: 'application/zip' });
 			const url = window.URL.createObjectURL(blob);
 			saveAs(blob, 'download.zip');
 		}), 

@@ -52,12 +52,12 @@ export class QuestionsService {
 		return this.httpClient.post(`${BASE_URL}/questions/export-moodle`, data, httpOptions);
   }
 
-  exportLatexAndMoodle(course: Course, section: number): any {
+  exportLatexAndMoodle(course: Course, section: number): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
-        'Response-Type': 'blob'
-      })
+      }),
+      responseType: 'blob' as 'json'
     };
 
     let data = { "course" : course, "section" : section };
