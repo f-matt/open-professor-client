@@ -8,7 +8,6 @@ import { CoursesService } from 'src/app/services/courses.service';
 import { FormsModule } from '@angular/forms';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatSelect } from '@angular/material/select';
-import { NgFor } from '@angular/common';
 import { MatOption } from '@angular/material/core';
 import { MatInput } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
@@ -18,7 +17,7 @@ import { ActivatedRoute } from '@angular/router';
     selector: 'app-add-question',
     templateUrl: './add-question.component.html',
     styleUrls: ['./add-question.component.css'],
-    imports: [FormsModule, MatFormField, MatLabel, MatSelect, NgFor, MatOption, MatInput, MatButton]
+    imports: [FormsModule, MatFormField, MatLabel, MatSelect, MatOption, MatInput, MatButton]
 })
 export class AddQuestionComponent implements OnInit {
 
@@ -28,7 +27,7 @@ export class AddQuestionComponent implements OnInit {
     private coursesService : CoursesService) { }
 
   protected question : Question = new Question();
- 
+
   courses : Course[] = [];
 
   ngOnInit() {
@@ -39,10 +38,7 @@ export class AddQuestionComponent implements OnInit {
     let answers : Answer[] = [];
     for (let i = 0; i < 4; ++i) {
       let answer : Answer = new Answer();
-      if (i == 0)
-        answer.correct = true;
-      else
-        answer.correct = false;
+      answer.correct = i == 0;
       answers.push(answer);
     }
 
@@ -98,7 +94,7 @@ export class AddQuestionComponent implements OnInit {
         return;
       }
     }
-    
+
     if (this.question.course == null) {
       this.snackBar.open("Course is mandatory.", "", { duration: 3000 });
       return;
