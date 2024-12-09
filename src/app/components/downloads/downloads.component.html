@@ -19,14 +19,14 @@
             <div>
                 <mat-form-field class="width-100">
                     <mat-label>Section</mat-label>
-                    <input matInput 
+                    <input matInput
                         name="section"
                         [(ngModel)]="section">
                 </mat-form-field>
             </div>
 
             <div>
-                <button mat-flat-button 
+                <button mat-flat-button
                     color="primary" (click)="downloadAll()">Download All</button>
             </div>
         </div>
@@ -69,11 +69,14 @@
                 </mat-form-field>
 
                 <mat-form-field class="width-100">
-                    <mat-label>Section</mat-label>
-                    <input matInput 
-                        name="sectionLatex"
-                        type="number"
-                        [(ngModel)]="sectionLatex">
+                  <mat-label>Section</mat-label>
+                  <mat-select name="sectionLatex"  [(ngModel)]="sectionLatex">
+                    <mat-option [value]="0">All</mat-option>
+                    <mat-option [value]="1">1</mat-option>
+                    <mat-option [value]="2">2</mat-option>
+                    <mat-option [value]="3">3</mat-option>
+                    <mat-option [value]="4">4</mat-option>
+                  </mat-select>
                 </mat-form-field>
             </div>
 

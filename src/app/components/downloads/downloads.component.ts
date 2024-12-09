@@ -29,8 +29,8 @@ export class DownloadsComponent {
 	moodleIds : string = '';
 	latexIds : string = '';
 
-	section?: number; 
-	sectionLatex?: number; 
+	section?: number;
+	sectionLatex?: number = 0;
 
 	constructor(
 		private snackBar : MatSnackBar,
@@ -59,7 +59,7 @@ export class DownloadsComponent {
 
 			this.moodleIds = this.moodleIds.replace(/, $/gm, '');
 			this.latexIds = this.latexIds.replace(/, $/gm, '');
-		}), 
+		}),
 		(error: any) => this.snackBar.open("Error getting question IDs", "", { duration: 3000 });
 	}
 
@@ -96,7 +96,7 @@ export class DownloadsComponent {
 			const blob = new Blob([response], { type: 'application/zip' });
 			const url = window.URL.createObjectURL(blob);
 			saveAs(blob, 'download.zip');
-		}), 
+		}),
 		(error: any) => {
 			console.log("Error");
 			this.snackBar.open("Error downloading file.", '', { duration: 3000});

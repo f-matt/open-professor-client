@@ -64,7 +64,7 @@ export class QuestionsService {
 
 		return this.httpClient.post(`${BASE_URL}/questions/export-moodle-and-latex`, data, httpOptions);
   }
- 
+
   downloadLatex(course: Course, section?: number): any {
     if (!course)
       throwError(() => new Error("Course is mandatory."));
@@ -73,10 +73,10 @@ export class QuestionsService {
     if (course.id)
       httpParams = httpParams.set("course", course.id);
 
-    if (section)
+    if (section && section != 0)
       httpParams = httpParams.set("section", section);
 
-		return this.httpClient.get(`${BASE_URL}/download-latex`, 
+		return this.httpClient.get(`${BASE_URL}/questions/export-latex`,
       {params: httpParams, responseType: 'blob'});
   }
 
@@ -87,7 +87,7 @@ export class QuestionsService {
   findByCourseAndSection(course : Course, section : number) : Observable<Question[]> {
     return this.httpClient.get<Question[]>(`${BASE_URL}/questions?course=${course.id}&section=${section}`);
   }
-  
+
   getAll() : Observable<Question[]> {
     return this.httpClient.get<any>(BASE_URL + 'questions').pipe(map(data => data.questions));
   }
