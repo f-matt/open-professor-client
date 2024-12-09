@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, catchError, map, throwError } from 'rxjs';
+import { Observable, map, throwError } from 'rxjs';
 import { Question } from '../models/question.model';
 import { Course } from '../models/course';
 import { environment } from '@environments/environment';
