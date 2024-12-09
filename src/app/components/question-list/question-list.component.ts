@@ -18,16 +18,15 @@ import { MatButtonModule } from '@angular/material/button';
     selector: 'app-question-list',
     templateUrl: './question-list.component.html',
     styleUrls: ['./question-list.component.css'],
-    standalone: true,
     imports: [
-      FormsModule, 
-      RouterModule,
-      MatFormFieldModule,
-      MatSelectModule,
-      MatTableModule,
-      MatIconModule,
-      MatInputModule,
-      MatButtonModule
+        FormsModule,
+        RouterModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatTableModule,
+        MatIconModule,
+        MatInputModule,
+        MatButtonModule
     ]
 })
 export class QuestionListComponent implements OnInit {

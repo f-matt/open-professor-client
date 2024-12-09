@@ -11,7 +11,6 @@ import { MatButton } from '@angular/material/button';
     selector: 'app-add-course',
     templateUrl: './add-course.component.html',
     styleUrls: ['./add-course.component.css'],
-    standalone: true,
     imports: [FormsModule, MatFormField, MatLabel, MatInput, MatButton]
 })
 export class AddCourseComponent {

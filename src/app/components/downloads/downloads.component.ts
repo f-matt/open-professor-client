@@ -18,7 +18,6 @@ import { MatButton } from '@angular/material/button';
     selector: 'app-downloads',
     templateUrl: './downloads.component.html',
     styleUrls: ['./downloads.component.css'],
-    standalone: true,
     imports: [FormsModule, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, FlexModule, MatFormField, MatLabel, MatSelect, NgFor, MatOption, MatInput, MatButton]
 })
 export class DownloadsComponent {

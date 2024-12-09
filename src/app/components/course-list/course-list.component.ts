@@ -10,7 +10,6 @@ import { MatIcon } from '@angular/material/icon';
     selector: 'app-course-list',
     templateUrl: './course-list.component.html',
     styleUrls: ['./course-list.component.css'],
-    standalone: true,
     imports: [MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, RouterLink, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow]
 })
 export class CourseListComponent implements OnInit {

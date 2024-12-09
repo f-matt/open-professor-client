@@ -18,7 +18,6 @@ import { ActivatedRoute } from '@angular/router';
     selector: 'app-add-question',
     templateUrl: './add-question.component.html',
     styleUrls: ['./add-question.component.css'],
-    standalone: true,
     imports: [FormsModule, MatFormField, MatLabel, MatSelect, NgFor, MatOption, MatInput, MatButton]
 })
 export class AddQuestionComponent implements OnInit {

@@ -17,21 +17,20 @@ import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
-  selector: 'app-question-download',
-  standalone: true,
-  imports: [
-    FormsModule, 
-    RouterModule,
-    MatButtonModule, 
-    MatTableModule, 
-    MatIconModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatInputModule,
-    MatCheckboxModule
-   ],
-  templateUrl: './question-export.component.html',
-  styleUrl: './question-export.component.scss'
+    selector: 'app-question-download',
+    imports: [
+        FormsModule,
+        RouterModule,
+        MatButtonModule,
+        MatTableModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatInputModule,
+        MatCheckboxModule
+    ],
+    templateUrl: './question-export.component.html',
+    styleUrl: './question-export.component.scss'
 })
 export class QuestionExportComponent {
   protected courses : Course[] = [];
