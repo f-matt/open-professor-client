@@ -1,12 +1,11 @@
 <div class="main-container">
   <mat-toolbar class="toolbar">
       @if (authService.isAuthenticated | async) {
-        <button mat-icon-button 
+        <button mat-icon-button
           style="color: white"
-          matTooltip="Menu" 
+          matTooltip="Menu"
           (click)="sidenav.toggle()"
-          *ngIf="(authService.isAuthenticated | async)"
-          onclick="this.blur()">
+          *ngIf="(authService.isAuthenticated | async)">
 
           <mat-icon>menu</mat-icon>
         </button>
@@ -15,9 +14,9 @@
       <div class="mat-headline-large">Open Professor</div>
 
       @if (authService.isAuthenticated | async) {
-        <button mat-icon-button 
+        <button mat-icon-button
           style="color: white"
-          matTooltip="Logout" 
+          matTooltip="Logout"
           (click)="logout()">
           <mat-icon>logout</mat-icon>
         </button>
@@ -25,36 +24,45 @@
   </mat-toolbar>
 
   <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #sidenav [mode]="'over'" [fixedInViewport]="true" fixedTopGap="56" autoFocus="false">
-      <div #sidenavListRef class="sidenav-list">
+    <mat-sidenav #sidenav [mode]="'over'" [fixedInViewport]="true" fixedTopGap="56" autoFocus="first-heading">
+      <div class="sidenav-list">
+        <button *ngIf="hasPermission('ADMIN')" mat-menu-item [matMenuTriggerFor]="menuAdministration">
+          Administration
+        </button>
         <button *ngIf="hasPermission('ADMIN')" mat-menu-item [matMenuTriggerFor]="menuCourses">Courses</button>
-        <button *ngIf="hasPermission('ADMIN')" mat-menu-item [matMenuTriggerFor]="menuQuestions">Questions</button>
         <button *ngIf="hasPermission('ADMIN')" mat-menu-item [matMenuTriggerFor]="menuDownloads">Downloads</button>
-    
+        <button *ngIf="hasPermission('ADMIN')" mat-menu-item [matMenuTriggerFor]="menuQuestions">Questions</button>
+
+        <mat-menu #menuAdministration="matMenu">
+          <button mat-menu-item
+                  routerLink="/parameters"
+                  (click)="sidenav.toggle()">Parameters</button>
+        </mat-menu>
+
         <mat-menu #menuCourses="matMenu">
-          <button mat-menu-item 
+          <button mat-menu-item
             routerLink="/courses/add"
             (click)="sidenav.toggle()">New</button>
-          <button mat-menu-item 
+          <button mat-menu-item
             routerLink="/courses"
             (click)="sidenav.toggle()">List</button>
         </mat-menu>
-        
+
         <mat-menu #menuQuestions="matMenu">
-          <button mat-menu-item 
+          <button mat-menu-item
             routerLink="/questions/export"
             (click)="sidenav.toggle()">Export</button>
-          <button mat-menu-item 
+          <button mat-menu-item
             routerLink="/questions"
             (click)="sidenav.toggle()">List</button>
-          <button mat-menu-item 
+          <button mat-menu-item
             routerLink="/questions/add"
             [queryParams]="{ new : true }"
             (click)="sidenav.toggle()">New</button>
         </mat-menu>
-        
+
         <mat-menu #menuDownloads="matMenu">
-          <button mat-menu-item 
+          <button mat-menu-item
             routerLink="/downloads"
             (click)="sidenav.toggle()">Downloads</button>
         </mat-menu>

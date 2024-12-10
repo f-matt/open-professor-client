@@ -1,0 +1,57 @@
+<div class="mat-h1 text-center">Parameters</div>
+
+<form [formGroup]="form">
+  <div style="display: flex; flex-direction: column; gap: 10px">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput
+             formControlName="name">
+    </mat-form-field>
+
+    <div style="display: flex; flex-direction: row; gap: 5px">
+      <button (click)="search()" mat-raised-button color="primary" type="button">
+        <mat-icon>search</mat-icon>
+        Search
+      </button>
+
+      <button (click)="new()" mat-raised-button color="primary" type="button">
+        <mat-icon>add</mat-icon>
+        New
+      </button>
+    </div>
+
+    <table mat-table [dataSource]="dataSourceWrapper.dataSource">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef style="text-align: center;"> ID </th>
+        <td mat-cell *matCellDef="let p" style="text-align: center;"> {{ p.id }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Name </th>
+        <td mat-cell *matCellDef="let p" style="text-align: center;"> {{ p.name }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="value">
+        <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Value </th>
+        <td mat-cell *matCellDef="let p" style="text-align: center;"> {{ p.value }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Actions </th>
+        <td mat-cell *matCellDef="let p" style="text-align: center;">
+          <button mat-icon-button matTooltip="Editar" type="button" (click)="edit(p)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="dataSourceWrapper.displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: dataSourceWrapper.displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator
+      [length]="dataSourceWrapper.length" [pageIndex]="dataSourceWrapper.pageIndex"
+      [pageSize]="dataSourceWrapper.pageSize" [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons></mat-paginator>
+  </div>
+</form>
