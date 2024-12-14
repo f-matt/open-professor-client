@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {MatButtonModule} from "@angular/material/button";
 import {MessagesService} from "../../services/messages.service";
 import {MatTableModule} from "@angular/material/table";
@@ -11,6 +11,8 @@ import {MatInput} from "@angular/material/input";
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {ParametersService} from "../../services/parameters.service";
 import {Parameter} from "../../models/parameter";
+import {MatDialog} from "@angular/material/dialog";
+import {ParameterDialogComponent} from "../parameter-dialog/parameter-dialog.component";
 
 @Component({
   selector: 'app-parameters',
@@ -39,9 +41,11 @@ export class ParametersComponent {
   protected dataSourceWrapper: DataSourceWrapper<Parameter> = new DataSourceWrapper(this.parameters,
     ["id", "name", "value", "actions"]);
 
-  constructor(private messagesService: MessagesService, private parametersService: ParametersService) {
+  private dialog = inject(MatDialog);
 
-  }
+  private messagesService: MessagesService = inject(MessagesService);
+
+  private parametersService: ParametersService = inject(ParametersService);
 
   search() {
     let name: string = this.form.value["name"];
@@ -67,8 +71,21 @@ export class ParametersComponent {
     this.messagesService.showMessage("Under construction...");
   }
 
-  edit(parameter: Parameter) {
-    this.messagesService.showMessage("Editing parameter " + parameter.name + "...");
+  edit(parameter: Parameter) :void {
+    if (Object.keys(parameter).length === 0) {
+      this.messagesService.showMessage("Parameter is mandatory.");
+      return;
+    }
+
+    this.parametersService.selectedParameter.set(parameter);
+    let dialogRef = this.dialog.open(ParameterDialogComponent, {
+      height: '600px',
+      width: '800px',
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.search();
+    });
   }
 
 }
