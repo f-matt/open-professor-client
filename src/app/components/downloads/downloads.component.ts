@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { QuestionsService } from '../../services/questions.service';
 import { saveAs } from 'file-saver';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -13,6 +13,7 @@ import { NgFor } from '@angular/common';
 import { MatOption } from '@angular/material/core';
 import { MatInput } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
+import {MessagesService} from "../../services/messages.service";
 
 @Component({
     selector: 'app-downloads',
@@ -20,14 +21,15 @@ import { MatButton } from '@angular/material/button';
     styleUrls: ['./downloads.component.css'],
     imports: [FormsModule, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, FlexModule, MatFormField, MatLabel, MatSelect, NgFor, MatOption, MatInput, MatButton]
 })
-export class DownloadsComponent {
+export class DownloadsComponent implements OnInit {
+
+  private messagesService: MessagesService = inject(MessagesService);
 
 	selectedCourse : Course = new Course();
 	selectedCourseLatex : Course = new Course();
 
 	courses : Course[] = [];
 	moodleIds : string = '';
-	latexIds : string = '';
 
 	section?: number;
 	sectionLatex?: number = 0;
@@ -41,67 +43,53 @@ export class DownloadsComponent {
 		this.coursesService.getAll().subscribe(courses => this.courses = courses);
 	}
 
-	fillRandomIds() {
-		this.questionsService.getIds(this.selectedCourse).subscribe((response: any) => {
-			if (response.questions.length != 20) {
-				this.snackBar.open("Wrong number of questions.", "", { duration: 3000 });
-				return;
-			}
-
-			this.moodleIds = '';
-			this.latexIds = '';
-			for (let i = 0; i < 20; ++i) {
-				if (i < 10)
-					this.moodleIds += response.questions[i] + ', ';
-				else
-					this.latexIds += response.questions[i] + ', ';
-			}
-
-			this.moodleIds = this.moodleIds.replace(/, $/gm, '');
-			this.latexIds = this.latexIds.replace(/, $/gm, '');
-		}),
-		(error: any) => this.snackBar.open("Error getting question IDs", "", { duration: 3000 });
-	}
-
 	downloadMoodle() {
-		this.questionsService.exportMoodle([]).subscribe((response: any) => {
-			let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
-			const url = window.URL.createObjectURL(blob);
-			saveAs(blob, 'file.xml');
-		}), (error: any) => this.snackBar.open("Error downloading file.", '', { duration: 3000}),
-			() => this.snackBar.open("File successfully downloaded!", '', { duration:3000});
+		this.questionsService.exportMoodle([]).subscribe({
+      next: (response: any) => {
+        let blob: any = new Blob([response], {type: 'text/json; charset=utf-8'});
+        window.URL.createObjectURL(blob);
+        saveAs(blob, 'file.xml');
+      },
+      error: (e: Error) => {
+        this.messagesService.handleError(e, "Error downloading file.");
+      }
+    });
 	}
 
 	downloadLatex() {
-		if (!this.selectedCourseLatex) {
-			this.snackBar.open("Course is mandatory.", "", { duration:3000 });
-			return;
-		}
+    if (!this.selectedCourseLatex) {
+      this.snackBar.open("Course is mandatory.", "", {duration: 3000});
+      return;
+    }
 
-		this.questionsService.downloadLatex(this.selectedCourseLatex, this.sectionLatex).subscribe((response: any) => {
-			let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
-			const url = window.URL.createObjectURL(blob);
-			saveAs(blob, 'questions.tex');
-		}), (error: any) => this.snackBar.open("Error downloading file.", '', { duration: 3000}),
-		() => this.snackBar.open("File successfully downloaded!", '', { duration:3000});
-	}
+    this.questionsService.downloadLatex(this.selectedCourseLatex, this.sectionLatex).subscribe({
+      next: (response: any) => {
+        let blob: any = new Blob([response], {type: 'text/plain; charset=utf-8'});
+        window.URL.createObjectURL(blob);
+        saveAs(blob, 'questions.tex');
+      },
+      error: (error: Error) => {
+        this.messagesService.handleError(error, "Error downloading file.");
+      }
+    });
+  }
 
 	downloadAll() {
-		if (!this.selectedCourse || !this.section) {
-			this.snackBar.open("Course and section are mandatory.");
-			return;
-		}
+    if (!this.selectedCourse || !this.section) {
+      this.snackBar.open("Course and section are mandatory.");
+      return;
+    }
 
-		this.questionsService.exportLatexAndMoodle(this.selectedCourse, this.section).subscribe((response: BlobPart) => {
-			const blob = new Blob([response], { type: 'application/zip' });
-			const url = window.URL.createObjectURL(blob);
-			saveAs(blob, 'download.zip');
-		}),
-		(error: any) => {
-			console.log("Error");
-			this.snackBar.open("Error downloading file.", '', { duration: 3000});
-		},
-		() => this.snackBar.open("File successfully downloaded!", '', { duration:3000});
+    this.questionsService.exportLatexAndMoodle(this.selectedCourse, this.section).subscribe({
+      next: (response: BlobPart) => {
+        const blob = new Blob([response], {type: 'application/zip'});
+        window.URL.createObjectURL(blob);
+        saveAs(blob, 'download.zip');
+      },
+      error: (error: Error) => {
+        this.messagesService.handleError(error, "Error downloading file.");
+      }
+    });
 	}
 
 }
